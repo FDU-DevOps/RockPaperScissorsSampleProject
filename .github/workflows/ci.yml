@@ -1,0 +1,29 @@
+name: RPS CI - Build, Test, Upload JAR
+
+on:
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code from branch
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+
+      - name: Build and Test with Maven
+        run: mvn -B clean test package
+
+      - name: Upload JAR file
+        uses: actions/upload-artifact@v4
+        with:
+          name: rps-jar
+          path: target/*.jar
