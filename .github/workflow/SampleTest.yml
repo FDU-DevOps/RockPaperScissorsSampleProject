@@ -1,0 +1,35 @@
+name: SamplePlayerWorkflow.yml
+on:
+  push:
+    branches: [ '**']   # all branches
+
+jobs:
+  build:                 # job ID, name of the task
+    runs-on: windows-latest   # this is the runner, could try windows-latest
+
+    steps:
+    - name: checkout code from branch
+      uses: actions/checkout@v6
+
+      # JDK 25 includes backward support for prior JREs
+    - name: Set up JDK 21 (temurin is from Eclipse, preloaded on Github, starts faster)
+      uses: actions/setup-java@v5.1.0
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build and Test with Maven
+      # Maven goals define output
+      # mvn tests - runs unit tests
+      # mvn package - compiles code and creates a JAR or WAR
+      # mvn clean  - erases target folder before starting
+      #  -B is batch mode - reduces log output
+      run: mvn -B clean package
+
+# Upload the generated JAR artifact if the build succeeds
+    - name: Upload JAR file
+      uses: actions/upload-artifact@v6
+      with:
+       name: package-artifact
+       path: target/*.jar
