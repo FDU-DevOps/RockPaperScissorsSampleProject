@@ -2,7 +2,9 @@ name: ci.yml
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ '**' ]
+  push:
+    branches: [ '**' ]
 
 jobs:
   build:
