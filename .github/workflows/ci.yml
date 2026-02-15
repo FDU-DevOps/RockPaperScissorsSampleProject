@@ -1,4 +1,4 @@
-name: RPS CI - Build, Test, Upload JAR
+name: ci.yml
 
 on:
   pull_request:
