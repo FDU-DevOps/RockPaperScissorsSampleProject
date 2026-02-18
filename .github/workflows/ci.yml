@@ -1,4 +1,4 @@
-name: RPS Pipeline: Build, Test, Upload JAR
+name: RPS Pipeline - Build, Test, Upload JAR
 
 on:
   pull_request:
